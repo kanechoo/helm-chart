@@ -57,7 +57,7 @@ service:
     port: 6800
 
 ariangIngress:
-  enabled: true
+  enabled: false
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -72,7 +72,7 @@ ariangIngress:
   #    hosts:
   #      - chart-example.local
 aria2proIngress:
-  enabled: true
+  enabled: false
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
