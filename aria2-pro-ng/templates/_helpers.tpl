@@ -55,7 +55,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 */}}
 {{- define "aria2-pro-ng.rpcSecret" -}}
 {{- if .Values.rpcSecret }}
-{{ .Values.rpcSecret | quote }}
+{{ .Values.rpcSecret }}
 {{- else }}
 {{- randAlphaNum 32 }}
 {{- end }}
