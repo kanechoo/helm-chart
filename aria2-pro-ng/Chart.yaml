@@ -23,4 +23,4 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 
-icon: https://raw.githubusercontent.com/P3TERX/aria2-pro-ng/master/docs/icon.png
+icon: https://raw.githubusercontent.com/kanechoo/helm-chart/master/aria2-pro-ng/icon.png
