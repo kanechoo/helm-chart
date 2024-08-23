@@ -49,7 +49,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ include "aria2-pro-ng.fullname" . }}
-                key: data
+                key: rpcSecret
           - name: TZ
             value: Asia/Shanghai
           - name: UMASK_SET
