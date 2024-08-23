@@ -121,7 +121,7 @@ autoscaling:
 volumes:
   - name: config
     emptyDir: {}
-  - name: download
+  - name: downloads
     emptyDir: {}
 # - name: foo
 #   secret:
@@ -134,8 +134,8 @@ volumeMounts:
     - name: config
       mountPath: /config
       readOnly: false
-    - name: download
-      mountPath: /download
+    - name: downloads
+      mountPath: /downloads
       readOnly: false
   ariang: {}
 
