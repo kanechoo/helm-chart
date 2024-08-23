@@ -57,7 +57,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Values.rpcSecret }}
 {{ .Values.rpcSecret | quote }}
 {{- else }}
-{{ .Values.rpcSecret = randAlphaNum 32 }}
+{{- randAlphaNum 32 }}
 {{- end }}
 {{- end }}
 
