@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "aria2-pro-ng.fullname" . }}
+  labels:
+    {{- include "aria2-pro-ng.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.aria2pro.port }}
+      targetPort: 6800
+      protocol: TCP
+      name: {{ .Values.service.aria2pro.name }}
+    - port: {{ .Values.service.ariang.port }}
+      targetPort: 6880
+      protocol: TCP
+      name: {{ .Values.service.ariang.name }}
+  selector:
+    {{- include "aria2-pro-ng.selectorLabels" . | nindent 4 }}

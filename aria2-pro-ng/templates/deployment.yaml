@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "aria2-pro-ng.fullname" . }}
+  labels:
+    {{- include "aria2-pro-ng.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "aria2-pro-ng.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "aria2-pro-ng.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "aria2-pro-ng.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: aria2pro
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.aira2pro.repository }}:{{ .Values.image.aria2pro.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.aria2pro.pullPolicy }}
+          ports:
+            - name: {{ .Values.service.aria2pro.name }}
+              containerPort: 6800
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe.aria2pro | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe.aria2pro | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources.aria2pro | nindent 12 }}
+          {{- with .Values.volumeMounts.aria2pro }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        - name: ariang
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.ariang.repository }}:{{ .Values.image.ariang.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.ariang.pullPolicy }}
+          ports:
+            - name: {{ .Values.service.ariang.name }}
+              containerPort: 6880
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe.ariang | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe.ariang | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources.ariang | nindent 12 }}
+          {{- with .Values.volumeMounts.ariang }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

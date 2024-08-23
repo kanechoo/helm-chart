@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "aria2-pro-ng.fullname" . }}-test-connection"
+  labels:
+    {{- include "aria2-pro-ng.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "aria2-pro-ng.fullname" . }}:{{ .Values.service.ariang.port }}']
+  restartPolicy: Never
