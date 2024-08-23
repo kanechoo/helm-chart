@@ -56,20 +56,28 @@ spec:
             value: "022"
           - name: UPDATE_TRACKERS
             value: "true"
+          {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
           image: "{{ .Values.image.aria2pro.repository }}:{{ .Values.image.aria2pro.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.aria2pro.pullPolicy }}
           ports:
             - name: {{ .Values.service.aria2pro.name }}
               containerPort: 6800
               protocol: TCP
+          {{- with .Values.livenessProbe.aria2pro }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe.aria2pro | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe.aria2pro }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe.aria2pro | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources.aria2pro }}
           resources:
             {{- toYaml .Values.resources.aria2pro | nindent 12 }}
+          {{- end }}
           {{- with .Values.volumeMounts.aria2pro }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
@@ -79,20 +87,28 @@ spec:
           - --port
           - "6880"
           - --ipv6
+          {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
           image: "{{ .Values.image.ariang.repository }}:{{ .Values.image.ariang.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.ariang.pullPolicy }}
           ports:
             - name: {{ .Values.service.ariang.name }}
               containerPort: 6880
               protocol: TCP
+          {{- with .Values.livenessProbe.ariang }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe.ariang | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe.ariang }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe.ariang | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources.ariang }}
           resources:
             {{- toYaml .Values.resources.ariang | nindent 12 }}
+          {{- end }}
           {{- with .Values.volumeMounts.ariang }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
