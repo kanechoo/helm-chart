@@ -51,6 +51,17 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+    RPC secret
+*/}}
+{{- define "aria2-pro-ng.rpcSecret" -}}
+{{- if .Values.rpcSecret }}
+{{ .Values.rpcSecret | quote }}
+{{- else }}
+{{ .Values.rpcSecret = randAlphaNum 32 }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "aria2-pro-ng.serviceAccountName" -}}

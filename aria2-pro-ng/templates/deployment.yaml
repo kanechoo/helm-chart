@@ -32,6 +32,30 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: aria2pro
+          env:
+          - name: DISK_CACHE
+            value: 64M
+          - name: IPV6_MODE
+            value: "false"
+          - name: LISTEN_PORT
+            value: "6888"
+          - name: PGID
+            value: "65534"
+          - name: PUID
+            value: "65534"
+          - name: RPC_PORT
+            value: "6800"
+          - name: RPC_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "aria2-pro-ng.fullname" . }}
+                key: data
+          - name: TZ
+            value: Asia/Shanghai
+          - name: UMASK_SET
+            value: "022"
+          - name: UPDATE_TRACKERS
+            value: "true"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.aria2pro.repository }}:{{ .Values.image.aria2pro.tag | default .Chart.AppVersion }}"
@@ -51,6 +75,10 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
         - name: ariang
+          args:
+          - --port
+          - "6880"
+          - --ipv6
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.ariang.repository }}:{{ .Values.image.ariang.tag | default .Chart.AppVersion }}"

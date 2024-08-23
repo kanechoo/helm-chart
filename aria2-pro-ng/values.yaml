@@ -19,6 +19,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: "aria2-pro-ng"
 
+rpcSecret: ""
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
