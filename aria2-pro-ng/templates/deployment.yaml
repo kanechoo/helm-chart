@@ -34,7 +34,7 @@ spec:
         - name: aria2pro
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.aira2pro.repository }}:{{ .Values.image.aria2pro.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.aria2pro.repository }}:{{ .Values.image.aria2pro.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.aria2pro.pullPolicy }}
           ports:
             - name: {{ .Values.service.aria2pro.name }}
